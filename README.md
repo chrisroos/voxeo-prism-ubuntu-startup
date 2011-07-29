@@ -5,4 +5,5 @@ This should allow you to automatically start [Voxeo Prism](http://www.voxeo.com/
     $ bash < <(curl -s https://raw.github.com/chrisroos/voxeo-prism-ubuntu-startup/master/install)
     
 *NOTE* There are currently warnings from update-rc.d because the scripts are missing some LSB information.  I think this is safe to ignore.
+
 *NOTE* You'll also get warnings from update-rc.d if the service has already been installed.  I think these are safe to ignore too.
