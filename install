@@ -3,3 +3,7 @@
 wget -q -O /etc/init.d/voxeo-smanager https://raw.github.com/chrisroos/voxeo-prism-ubuntu-startup/master/voxeo-smanager
 wget -q -O /etc/init.d/voxeo-as https://raw.github.com/chrisroos/voxeo-prism-ubuntu-startup/master/voxeo-as
 wget -q -O /etc/init.d/voxeo-ms https://raw.github.com/chrisroos/voxeo-prism-ubuntu-startup/master/voxeo-ms
+
+chmod +x /etc/init.d/voxeo-smanager
+chmod +x /etc/init.d/voxeo-as
+chmod +x /etc/init.d/voxeo-ms
