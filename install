@@ -9,3 +9,8 @@ echo "Ensuring scripts are executable"
 chmod +x /etc/init.d/voxeo-smanager
 chmod +x /etc/init.d/voxeo-as
 chmod +x /etc/init.d/voxeo-ms
+
+echo "Installing the service at the relevant runlevels"
+update-rc.d voxeo-smanager defaults 20
+update-rc.d voxeo-ms defaults 21
+update-rc.d voxeo-as defaults 21
