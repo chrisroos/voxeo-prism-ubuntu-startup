@@ -8,69 +8,69 @@
 # pidfile: /var/run/voxeo-smanager.pid
 
 WaitForPidToExit() {
-	# check for a maximum of 60 seconds
-	local retry=60
-	local pid=`cat $PIDFILE`
-	local foundpid=
-	
-	foundpid=$(ps -ef | grep $pid | awk '!/grep/ {print $2}')
-	while [ -n "$foundpid" -a "$retry" -gt 0 ]; do
-		sleep 1
-		echo -n "."
-		retry=$(($retry -1))
-		foundpid=$(ps -ef | grep $pid | awk '!/grep/ {print $2}')
-	done
-    
-	# if Process still running, kill it
-	if [ -n "$foundpid" ] ; then
-		echo ""
-		echo $pid " is still running.  Kill it."
-		kill -9 `ps -ef | grep $pid | awk '!/grep/ {print $2}'`
-	fi
+  # check for a maximum of 60 seconds
+  local retry=60
+  local pid=`cat $PIDFILE`
+  local foundpid=
+
+  foundpid=$(ps -ef | grep $pid | awk '!/grep/ {print $2}')
+  while [ -n "$foundpid" -a "$retry" -gt 0 ]; do
+    sleep 1
+    echo -n "."
+    retry=$(($retry -1))
+    foundpid=$(ps -ef | grep $pid | awk '!/grep/ {print $2}')
+  done
+
+  # if Process still running, kill it
+  if [ -n "$foundpid" ] ; then
+    echo ""
+    echo $pid " is still running.  Kill it."
+    kill -9 `ps -ef | grep $pid | awk '!/grep/ {print $2}'`
+  fi
 }
 
 PIDFILE=/var/run/voxeo-smanager.pid
 
 case "$1" in
   start)
-        echo -n "Starting  smanager: "
-	if [ -e $PIDFILE ]; then
-		echo "  smanager Already running.  Stop it first."
-		exit 1
-	fi 
+    echo -n "Starting  smanager: "
+    if [ -e $PIDFILE ]; then
+      echo "  smanager Already running.  Stop it first."
+      exit 1
+    fi 
     export HOME=/opt/voxeo/prism
     export LD_LIBRARY_PATH=/opt/voxeo/prism/bin:/opt/voxeo/prism/lib:$LD_LIBRARY_PATH$
-	cd /opt/voxeo/prism/bin;	/opt/voxeo/prism/bin/prism service smanager PIDFILE=$PIDFILE 2>&1 >>/dev/null
-        echo
-        touch /var/lock/subsys/voxeo-smanager
-        ;;
+    cd /opt/voxeo/prism/bin;	/opt/voxeo/prism/bin/prism service smanager PIDFILE=$PIDFILE 2>&1 >>/dev/null
+    echo
+    touch /var/lock/subsys/voxeo-smanager
+    ;;
   stop)
-        echo -n "Shutting down smanager: "
-	if [ -e $PIDFILE ]; then
-		kill `cat $PIDFILE`
-        WaitForPidToExit
-	else
-		echo "  smanager not running."
-	fi
-        echo
-        rm -f /var/lock/subsys/voxeo-smanager
-        rm -f $PIDFILE
-        ;;
+    echo -n "Shutting down smanager: "
+    if [ -e $PIDFILE ]; then
+      kill `cat $PIDFILE`
+      WaitForPidToExit
+    else
+      echo "  smanager not running."
+    fi
+    echo
+    rm -f /var/lock/subsys/voxeo-smanager
+    rm -f $PIDFILE
+    ;;
   status)
-        status voxeo-smanager
-        ;;
+    status voxeo-smanager
+    ;;
   restart)
-        $0 stop
-        $0 start
-        ;;
+    $0 stop
+    $0 start
+    ;;
   reload)
-        echo -n "Reloading smanager: "
-        killproc voxeo-smanager -HUP
-        echo
-        ;;
+    echo -n "Reloading smanager: "
+    killproc voxeo-smanager -HUP
+    echo
+    ;;
   *)
-        echo "Usage: $0 {start|stop|restart|reload|status}"
-        exit 1
+  echo "Usage: $0 {start|stop|restart|reload|status}"
+  exit 1
 esac
 
 exit 0

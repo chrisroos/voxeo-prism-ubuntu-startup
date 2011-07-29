@@ -12,7 +12,7 @@ WaitForPidToExit() {
   local retry=60
   local pid=`cat $PIDFILE`
   local foundpid=
-  
+
   foundpid=$(ps -ef | grep $pid | awk '!/grep/ {print $2}')
   while [ -n "$foundpid" -a "$retry" -gt 0 ]; do
     sleep 1
@@ -20,7 +20,7 @@ WaitForPidToExit() {
     retry=$(($retry -1))
     foundpid=$(ps -ef | grep $pid | awk '!/grep/ {print $2}')
   done
-    
+
   # if Process still running, kill it
   if [ -n "$foundpid" ] ; then
     echo ""
@@ -33,44 +33,44 @@ PIDFILE=/var/run/voxeo-ms.pid
 
 case "$1" in
   start)
-        echo -n "Starting  MS: "
-  if [ -e $PIDFILE ]; then
-    echo "  MS Already running.  Stop it first."
-    exit 1
-  fi 
+    echo -n "Starting  MS: "
+    if [ -e $PIDFILE ]; then
+      echo "  MS Already running.  Stop it first."
+      exit 1
+    fi 
     export HOME=/opt/voxeo/prism
     export LD_LIBRARY_PATH=/opt/voxeo/prism/bin:/opt/voxeo/prism/lib:$LD_LIBRARY_PATH$
-  cd /opt/voxeo/prism/bin;  /opt/voxeo/prism/bin/prism service ms PIDFILE=$PIDFILE 2>&1 >>/dev/null
-        echo
-        touch /var/lock/subsys/voxeo-ms
-        ;;
+    cd /opt/voxeo/prism/bin;  /opt/voxeo/prism/bin/prism service ms PIDFILE=$PIDFILE 2>&1 >>/dev/null
+    echo
+    touch /var/lock/subsys/voxeo-ms
+    ;;
   stop)
-        echo -n "Shutting down MS: "
-  if [ -e $PIDFILE ]; then
-    kill `cat $PIDFILE`
-        WaitForPidToExit
-  else
-    echo "  ms not running."
-  fi
-        echo
-        rm -f /var/lock/subsys/voxeo-ms
-        rm -f $PIDFILE
-        ;;
+    echo -n "Shutting down MS: "
+    if [ -e $PIDFILE ]; then
+      kill `cat $PIDFILE`
+      WaitForPidToExit
+    else
+      echo "  ms not running."
+    fi
+    echo
+    rm -f /var/lock/subsys/voxeo-ms
+    rm -f $PIDFILE
+    ;;
   status)
-        status voxeo-ms
-        ;;
+    status voxeo-ms
+    ;;
   restart)
-        $0 stop
-        $0 start
-        ;;
+    $0 stop
+    $0 start
+    ;;
   reload)
-        echo -n "Reloading ms: "
-        killproc voxeo-ms -HUP
-        echo
-        ;;
+    echo -n "Reloading ms: "
+    killproc voxeo-ms -HUP
+    echo
+    ;;
   *)
-        echo "Usage: $0 {start|stop|restart|reload|status}"
-        exit 1
+  echo "Usage: $0 {start|stop|restart|reload|status}"
+  exit 1
 esac
 
 exit 0
