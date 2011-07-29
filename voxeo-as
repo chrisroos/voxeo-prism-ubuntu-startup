@@ -61,16 +61,16 @@ case "$1" in
     echo
     ;;
   status)
-    status voxeo-as
+    echo "This isn't currently supported on Ubuntu."
+    exit 1
     ;;
   restart)
     $0 stop
     $0 start
     ;;
   reload)
-    echo -n "Reloading AS: "
-    killproc voxeo-as -HUP
-    echo
+    echo "This isn't currently supported on Ubuntu."
+    exit 1
     ;;
   *)
   echo "Usage: $0 {start|stop|restart|reload|status}"

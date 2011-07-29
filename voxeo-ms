@@ -58,16 +58,16 @@ case "$1" in
     rm -f $PIDFILE
     ;;
   status)
-    status voxeo-ms
+    echo "This isn't currently supported on Ubuntu."
+    exit 1
     ;;
   restart)
     $0 stop
     $0 start
     ;;
   reload)
-    echo -n "Reloading ms: "
-    killproc voxeo-ms -HUP
-    echo
+    echo "This isn't currently supported on Ubuntu."
+    exit 1
     ;;
   *)
   echo "Usage: $0 {start|stop|restart|reload|status}"

@@ -58,16 +58,16 @@ case "$1" in
     rm -f $PIDFILE
     ;;
   status)
-    status voxeo-smanager
+    echo "This isn't currently supported on Ubuntu."
+    exit 1
     ;;
   restart)
     $0 stop
     $0 start
     ;;
   reload)
-    echo -n "Reloading smanager: "
-    killproc voxeo-smanager -HUP
-    echo
+    echo "This isn't currently supported on Ubuntu."
+    exit 1
     ;;
   *)
   echo "Usage: $0 {start|stop|restart|reload|status}"
