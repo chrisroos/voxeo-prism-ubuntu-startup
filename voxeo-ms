@@ -30,7 +30,7 @@ WaitForPidToExit() {
 }
 
 PIDFILE=/var/run/voxeo-ms.pid
-LOCKFILE=/var/lock/subsys/voxeo-ms
+LOCKFILE=/var/run/voxeo-ms
 
 case "$1" in
   start)

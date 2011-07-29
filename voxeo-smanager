@@ -30,7 +30,7 @@ WaitForPidToExit() {
 }
 
 PIDFILE=/var/run/voxeo-smanager.pid
-LOCKFILE=/var/lock/subsys/voxeo-smanager
+LOCKFILE=/var/run/voxeo-smanager
 
 case "$1" in
   start)
