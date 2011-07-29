@@ -30,6 +30,7 @@ WaitForPidToExit() {
 }
 
 PIDFILE=/var/run/voxeo-as.pid
+LOCKFILE=/var/lock/subsys/voxeo-as
 
 case "$1" in
   start)
@@ -43,18 +44,18 @@ case "$1" in
     cd /opt/voxeo/prism/bin;	/opt/voxeo/prism/bin/prism service as PIDFILE=$PIDFILE 2>&1 >>/dev/null
 
     echo
-    touch /var/lock/subsys/voxeo-as
+    touch $LOCKFILE
     ;;
   stop)
     echo -n "Shutting down AS: "
     if [ -e $PIDFILE ]; then
       kill `cat $PIDFILE`
       WaitForPidToExit
-      rm -f /var/lock/subsys/voxeo-as
+      rm -f $LOCKFILE
       rm -f $PIDFILE
     else
       echo "  AS not running."
-      rm -f /var/lock/subsys/voxeo-as
+      rm -f $LOCKFILE
       exit 1
     fi
     echo

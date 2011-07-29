@@ -30,6 +30,7 @@ WaitForPidToExit() {
 }
 
 PIDFILE=/var/run/voxeo-ms.pid
+LOCKFILE=/var/lock/subsys/voxeo-ms
 
 case "$1" in
   start)
@@ -42,7 +43,7 @@ case "$1" in
     export LD_LIBRARY_PATH=/opt/voxeo/prism/bin:/opt/voxeo/prism/lib:$LD_LIBRARY_PATH$
     cd /opt/voxeo/prism/bin;  /opt/voxeo/prism/bin/prism service ms PIDFILE=$PIDFILE 2>&1 >>/dev/null
     echo
-    touch /var/lock/subsys/voxeo-ms
+    touch $LOCKFILE
     ;;
   stop)
     echo -n "Shutting down MS: "
@@ -53,7 +54,7 @@ case "$1" in
       echo "  ms not running."
     fi
     echo
-    rm -f /var/lock/subsys/voxeo-ms
+    rm -f $LOCKFILE
     rm -f $PIDFILE
     ;;
   status)
