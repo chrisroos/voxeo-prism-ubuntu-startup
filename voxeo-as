@@ -7,9 +7,6 @@
 # processname: AS
 # pidfile: /var/run/as.pid
 
-# Source function library.      This creates the operating environment for the process to be started
-. /etc/init.d/functions
-
 WaitForPidToExit() {
 	# check for a maximum of 60 seconds
 	local retry=60
